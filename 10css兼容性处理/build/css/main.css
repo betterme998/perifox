@@ -1,0 +1,14 @@
+#box1{
+    width: 200px;
+    height: 200px;
+    background-color: turquoise;
+}
+#box2{
+    width: 200px;
+    height: 200px;
+    background-color: turquoise;
+    display: -webkit-flex;
+    display: flex;
+    -webkit-backface-visibility: hidden;
+            backface-visibility: hidden;
+}
