@@ -38,7 +38,10 @@ module.exports = {
             {
                  // 处理样html的图片· 
                 test:/\.html$/,
-                loader:'html-withimg-loader'
+                loader:'html-withimg-loader',
+                options:{
+                    esModule:false
+                }
             },
             {
                 // 处理less资源· 因为样式资源会因为css-loader的原因 把样式文件打包到js中 所以样式并不会输出，和js文件融为一体了

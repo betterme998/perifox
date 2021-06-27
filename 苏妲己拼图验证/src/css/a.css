@@ -1,29 +1,53 @@
 body{
     display: flex;
-    justify-content: center;
+    flex-direction: column;
+    /* justify-content: center; */
     align-items: center;
-    min-height: 100vh;
+    min-height: 120vh;
+    --width:30rem;
+    --puzzle-width:6rem;
 }
 #captcha{
-    --width:400px;
-    --height: 260px;
+    --width:30rem;
+    --height: 19.5rem;
 
     /* 设置拼图方块的大小 */
-    --puzzle-width:80px;
-    --puzzle-height:80px;
-    --moved: 0px;
+    --puzzle-width:6rem;
+    --puzzle-height:6rem;
+    --moved: 0rem;
 
 
-    display: block;
+    display: flex;
+    flex-direction: column;
     width: var(--width);
     height: var(--height);
     border-radius: 4px;
     /* 通过webpack  publicPath 添加路径进来 */
-    background-image: url('../imgs/21.jpg');
     background-size:cover;
     background-position: center;
     position: relative;
     box-shadow: 0px 2px 4px rgba(0, 0, 0, .3);
+    left: var(--puzzle-width);
+    margin-bottom: 6.25rem;
+    box-sizing: border-box;
+}
+.huan0{
+    background-image: url('../imgs/21.jpg');
+}
+.huan1{
+    background-image: url('../imgs/20.jpg');
+}
+.huan2{
+    background-image: url('../imgs/19.jpg');
+}
+.huan3{
+    background-image: url('../imgs/22.jpg');
+}
+.huan4{
+    background-image: url('../imgs/23.jpg');
+}
+.huan5{
+    background-image: url('../imgs/24.jpg');
 }
 /* <!-- 接下来制作两块拼图，一块在外面，一块在里面
         
@@ -113,7 +137,7 @@ body{
     /* 处理水平拖来的位移 需要最大最小值，不然会超出滚动条 */
     transform: translateX(
         clamp(
-            0px,
+            0rem,
             var(--moved),
             calc( var(--puzzle-width) + var(--width) )
         )
@@ -129,5 +153,109 @@ body{
 #captcha.passed::after,
 #captcha.passed #handle{
     opacity: 0;
+}
+
+/* 按钮 */
+.anniu{
+    width: calc( var(--width) + var(--puzzle-width) *2 );
+    height: 6.25rem;
+    display: flex;
+    justify-content: space-evenly;
+    z-index: 100;
+    box-sizing: border-box;
+    position: relative;
+}
+.anniu div{
+    width: 26%;
+    height: 100%;
+    background-size: cover;
+    background-position: center;
+    border-radius: 3px;
+    box-sizing: border-box;
+}
+.anniu .a0{
+    background-image: url('../imgs/21.jpg');
+}
+.anniu .a1{
+    background-image: url('../imgs/20.jpg');
+}
+.anniu .a2{
+    background-image: url('../imgs/19.jpg');
+} 
+.anniu .a3{
+    background-image: url('../imgs/22.jpg');
+}
+.anniu .a4{
+    background-image: url('../imgs/23.jpg');
+}
+.anniu .a5{
+    background-image: url('../imgs/24.jpg');
+} 
+
+
+
+
+
+.anniu div:active{
+   border: 1px solid #eee;
+}
+.anniu span{
+    color:rgb(153, 149, 149);
+    font-size: 2rem;
+    position: absolute;
+    align-self: flex-start;
+     right: 2rem;
+    top: -2.5rem; 
+}
+
+@media(max-width:680px){
+    #captcha{
+        --width:15rem;
+        --height: 9.7503rem;
+    
+        /* 设置拼图方块的大小 */
+        --puzzle-width:3rem;
+        --puzzle-height:3rem;
+        --moved: 0rem;    
+        /* position: absolute; */
+        /* right: calc(var(--puzzle-width)/2); */
+    }
+    #handle{
+        height: 1.325rem;
+        border-radius: 0.7rem;
+        bottom: -1.87rem;
+        border: 1px solid #ccc;
+        /* left: 0; */
+    }
+    #handle span{
+        transition: none;
+    }
+    #captcha::after{
+        transition: none;
+    }
+    body{
+        justify-content: end;
+        --width:15rem;
+        --height: 9.7503rem;
+    }
+    .anniu{
+        width: calc( var(--width) + var(--puzzle-width) *2 );
+        height: 4.25rem;
+        align-self: center;
+        position: relative;
+        margin-top: -10%;
+        display: flex;
+        justify-content: space-evenly;
+        position: relative;
+    }
+    .anniu span{
+        top: -2rem; 
+    }
+}
+@media(max-width:1400px){
+    body{
+        justify-content: center;
+    }
+    
 }
 
