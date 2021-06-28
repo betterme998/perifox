@@ -1,17 +1,19 @@
-const {resolve} = require('path');
+const { resolve } = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const miniCssExtractPlugin = require('mini-css-extract-plugin');
 // 引入插件
 const CssMinimizerPlugin  = require('css-minimizer-webpack-plugin')
+//引入eslint代码检测插件
+const EslintPlugin = require('eslint-webpack-plugin')
 
-process.env.NODE_ENV = 'development';
+process.env.NODE_ENV = 'development'
 module.exports = {
-    entry:'./src/js/index.js',
-    output:{
-        filename:'js/main.js',
-        path:resolve(__dirname,'build'),
-    },
-    module:{
+  entry: './src/js/index.js',
+  output:{
+    filename:'js/main.js',
+    path:resolve(__dirname,'build')
+},
+  module:{
         rules:[
             {
                 test:/\.css$/,
@@ -52,6 +54,34 @@ module.exports = {
                     outputPath:'media',
                     publicPath:'../media'
                 }
+            },
+            // 配置js兼容性处理
+            {
+                test:/\.js$/,
+                exclude:/node_modules/,
+                loader:'babel-loader',
+                options:{
+                    presets:[
+                      [
+                        '@babel/preset-env',
+                        {
+                          useBuiltIns:'usage',
+                          corejs:{
+                            version:3
+                          },
+                          targets:{
+                            chrome:'60',
+                            firefox:'60',
+                            ie:'9',
+                            safari:'10',
+                            edge:'17'
+                          }
+          
+                        }
+                      ]
+                    ]
+          
+                  }
             }
         ]
     },
@@ -63,7 +93,10 @@ module.exports = {
             filename:'css/main.css'
         }),
         // 压缩css
-        new CssMinimizerPlugin()
+        new CssMinimizerPlugin(),
+        new EslintPlugin({
+            fix:true
+        }) 
     ],
     mode:'development'
 }
