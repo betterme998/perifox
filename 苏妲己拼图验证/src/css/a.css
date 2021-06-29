@@ -1,33 +1,39 @@
 body{
     display: flex;
     flex-direction: column;
-    /* justify-content: center; */
+    justify-content: center;
     align-items: center;
-    min-height: 120vh;
-    --width:30rem;
-    --puzzle-width:6rem;
-}
-#captcha{
+    /* min-height: 100vh; */
+    /* min-width: 100vw; */
     --width:30rem;
     --height: 19.5rem;
-
     /* 设置拼图方块的大小 */
     --puzzle-width:6rem;
     --puzzle-height:6rem;
     --moved: 0rem;
-
-
+}
+.centers{
+    width: calc( var(--width) + var(--puzzle-width) *2 );
+    height: calc( var(--height)*1.2 );
     display: flex;
     flex-direction: column;
+    align-items: flex-end;
+    position: relative;
+    justify-content: space-between;
+    margin-bottom: 30px;
+}
+#captcha{
+    display: flex;
+    align-items: flex-end;
     width: var(--width);
     height: var(--height);
     border-radius: 4px;
     /* 通过webpack  publicPath 添加路径进来 */
     background-size:cover;
     background-position: center;
-    position: relative;
+    position: absolute;
     box-shadow: 0px 2px 4px rgba(0, 0, 0, .3);
-    left: var(--puzzle-width);
+    /* left: var(--puzzle-width); */
     margin-bottom: 6.25rem;
     box-sizing: border-box;
 }
@@ -77,17 +83,7 @@ body{
         calc( var(--width) - var(--puzzle-width)*2 )
 
     );
-    -webkit-clip-path:inset(
-        /* 第一个值由上向内方向缩小 */
-        calc( (var(--height) - var(--puzzle-height))/2 )
-        /* 第二个值由右向内方向缩小 */
-        var(--puzzle-width)
-        /* 第三个值由下向内方向缩小 */
-        calc( (var(--height) - var(--puzzle-height))/2 )
-         /* 第四个值由左向内方向缩小 */
-        calc( var(--width) - var(--puzzle-width)*2 )
-
-    );
+   
 }
 
 /* 然后将其中一个方块向左移出来 */
@@ -102,7 +98,7 @@ body{
     transition: .25s all ease-in-out;
 
 }
-#captcha:active::after{
+.centers:active #captcha::after{
     transition: none;
 }
 #captcha::before{
@@ -118,16 +114,18 @@ body{
     border-radius: 18px;
     background-color: #eee;
     position: absolute;
-    bottom: -50px;
     left: calc( var(--puzzle-width)*2*-1 );
     box-shadow: inset 0px 0px 12px rgba(0, 0, 0, .2);
     border: 3px solid #ccc;
+    bottom: -60px;
+    
 }
 /* 处理拖拉的按钮 */
 #handle span{
     display: block;
     width: var(--puzzle-width);
     height: inherit;
+    box-sizing: border-box;
     border-radius: inherit;
     background-color: #fff;
     /* 设置内阴影 */
@@ -145,7 +143,7 @@ body{
 
     transition: .25s all ease-in-out;
 }
-#captcha:active #handle span{
+.centers:active #handle span{
     transition: none;
 }
 /* 拼接上时的效果 */
@@ -158,9 +156,9 @@ body{
 /* 按钮 */
 .anniu{
     width: calc( var(--width) + var(--puzzle-width) *2 );
-    height: 6.25rem;
+    height: calc( var(--puzzle-width));
     display: flex;
-    justify-content: space-evenly;
+    justify-content: space-between;
     z-index: 100;
     box-sizing: border-box;
     position: relative;
@@ -203,23 +201,11 @@ body{
     color:rgb(153, 149, 149);
     font-size: 2rem;
     position: absolute;
-    align-self: flex-start;
-     right: 2rem;
-    top: -2.5rem; 
+     /* right: 2rem; */
+    top: -100%; 
 }
 
 @media(max-width:680px){
-    #captcha{
-        --width:15rem;
-        --height: 9.7503rem;
-    
-        /* 设置拼图方块的大小 */
-        --puzzle-width:3rem;
-        --puzzle-height:3rem;
-        --moved: 0rem;    
-        /* position: absolute; */
-        /* right: calc(var(--puzzle-width)/2); */
-    }
     #handle{
         height: 1.325rem;
         border-radius: 0.7rem;
@@ -234,28 +220,22 @@ body{
         transition: none;
     }
     body{
-        justify-content: end;
+        
         --width:15rem;
         --height: 9.7503rem;
+        --width:15rem;
+        --height: 9.7503rem;
+    
+        /* 设置拼图方块的大小 */
+        --puzzle-width:3rem;
+        --puzzle-height:3rem;
+        --moved: 0rem;   
+        justify-content: flex-start;
     }
-    .anniu{
-        width: calc( var(--width) + var(--puzzle-width) *2 );
-        height: 4.25rem;
-        align-self: center;
-        position: relative;
-        margin-top: -10%;
-        display: flex;
-        justify-content: space-evenly;
-        position: relative;
-    }
+
     .anniu span{
         top: -2rem; 
     }
 }
-@media(max-width:1400px){
-    body{
-        justify-content: center;
-    }
-    
-}
+
 

@@ -4,7 +4,7 @@ const miniCssExtractPlugin = require('mini-css-extract-plugin');
 // 引入插件
 const CssMinimizerPlugin  = require('css-minimizer-webpack-plugin')
 //引入eslint代码检测插件
-const EslintPlugin = require('eslint-webpack-plugin')
+// const EslintPlugin = require('eslint-webpack-plugin')
 
 process.env.NODE_ENV = 'development'
 module.exports = {
@@ -87,16 +87,20 @@ module.exports = {
     },
     plugins:[
         new HtmlWebpackPlugin({
-            template:'./src/index.html'
+            template:'./src/index.html',
+            minify:{
+              collapseWhitespace:true,
+              removeComments:true
+            }
         }),
         new miniCssExtractPlugin({
             filename:'css/main.css'
         }),
         // 压缩css
         new CssMinimizerPlugin(),
-        new EslintPlugin({
-            fix:true
-        }) 
+        // new EslintPlugin({
+        //     fix:true
+        // }) 
     ],
     mode:'development'
 }

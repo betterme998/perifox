@@ -2,25 +2,21 @@ import '../css/iconfont.css';
 import '../css/a.css';
 
 let shouldMove = false;// 用来判断是否在点击的状态下
-// eslint-disable-next-line
 const captcha = document.querySelector('#captcha');
-// eslint-disable-next-line
 const handle = document.querySelector('#handle');
-// eslint-disable-next-line
 const button = document.querySelector('#handle span');
-// eslint-disable-next-line
 const jia = document.querySelectorAll('.s');
-// eslint-disable-next-line
 const iconfont = document.querySelector('.iconfont');
-
 // 鼠标按下
-// eslint-disable-next-line
+
 button.addEventListener('mousedown', (e) => {
   shouldMove = true;
+  // e.preventDefault();
   // console.log(jia)
 });
-// eslint-disable-next-line
+
 button.addEventListener('touchstart', (e) => {
+  e.preventDefault();
   shouldMove = true;
 });
 
@@ -30,10 +26,9 @@ let ff = 0;
 function iconbtn() {
   iconfont.classList.toggle('icon-return');
   iconfont.classList.toggle('icon-resonserate');
-  // eslint-disable-next-line
+
   if (dd == 0) { dd = 3; } else { dd = 0; }
   jia.forEach((btn, index) => {
-    // eslint-disable-next-line
     if (dd == 3) {
       ff = index + dd;
       jia[index].classList.add(`a${ff}`);
@@ -58,9 +53,8 @@ function iconbtn() {
 iconfont.addEventListener('mousedown', () => {
   iconbtn();
 });
-// eslint-disable-next-line
+
 iconfont.addEventListener('touchstart', (e) => {
-  // eslint-disable-next-line
   e.preventDefault();
   iconbtn();
 });
@@ -68,42 +62,37 @@ iconfont.addEventListener('touchstart', (e) => {
 // 换图
 let ass = 0;
 function mousedownTouchstart(index) {
-  // eslint-disable-next-line
   captcha.classList.add('huan' + `${index + dd}`);
   // console.log(dd);
-  // eslint-disable-next-line
+
   for (let i = 0; i < jia.length; i++) {
-    // eslint-disable-next-line
     if (i == index) {
-    // eslint-disable-next-line
       if (i == 0) {
-        // eslint-disable-next-line
         ass = i + 1 + dd;
-        // eslint-disable-next-line
+
         captcha.classList.remove(`huan${ass}`);
         ass = i + 2 + dd;
-        // eslint-disable-next-line
+
         captcha.classList.remove(`huan${ass}`);
         captcha.classList.remove('passed');
         captcha.style.setProperty('--moved', '0px');
         ass = 0;
-        // eslint-disable-next-line
       } else if (i == 1) {
         ass = i - 1 + dd;
-        // eslint-disable-next-line
+
         captcha.classList.remove(`huan${ass}`);
         ass = i + 1 + dd;
-        // eslint-disable-next-line
+
         captcha.classList.remove(`huan${ass}`);
         captcha.classList.remove('passed');
         captcha.style.setProperty('--moved', '0px');
         ass = 0;
       } else {
         ass = i - 1 + dd;
-        // eslint-disable-next-line
+
         captcha.classList.remove(`huan${ass}`);
         ass = i - 2 + dd;
-        // eslint-disable-next-line
+
         captcha.classList.remove(`huan${ass}`);
         captcha.classList.remove('passed');
         captcha.style.setProperty('--moved', '0px');
@@ -115,29 +104,26 @@ function mousedownTouchstart(index) {
   }
 }
 jia.forEach((btn, index) => {
-  // eslint-disable-next-line
   btn.addEventListener('mousedown', (e) => {
     mousedownTouchstart(index);
   });
-  // eslint-disable-next-line
+
   btn.addEventListener('touchstart', (e) => {
+    e.preventDefault();
     mousedownTouchstart(index);
   });
 });
 
 // 鼠标移动
-// eslint-disable-next-line
+
 function mousemoveTouchmove(e) {
   if (shouldMove) {
-    // eslint-disable-next-line
     e.stopPropagation();
     let touch;
-    // eslint-disable-next-line
+
     if (e.touches) {
-      // eslint-disable-next-line
       touch = e.changedTouches[0];
     } else {
-      // eslint-disable-next-line
       touch = e;
     }
     // 定义常量 获取拉到杆与动画左边的位移
@@ -148,14 +134,14 @@ function mousemoveTouchmove(e) {
     captcha.style.setProperty('--moved', `${touch.clientX / 16 - offsetLeft / 16 - buttonWidth / 32}rem`);
   }
 }
-// eslint-disable-next-line
+
 window.addEventListener('touchmove', (e) => {
-  // eslint-disable-next-line
+  e.preventDefault();
+
   mousemoveTouchmove(e);
 });
-// eslint-disable-next-line
+
 window.addEventListener('mousemove', (e) => {
-  // eslint-disable-next-line
   mousemoveTouchmove(e);
 });
 
@@ -163,16 +149,14 @@ window.addEventListener('mousemove', (e) => {
 function mouseupTouchend(e) {
   if (shouldMove) {
     let touch;
-    // eslint-disable-next-line
+
     if (e.touches) {
-      // eslint-disable-next-line
       touch = e.changedTouches[0];
     } else {
-      // eslint-disable-next-line
       touch = e;
     }
     const finalOffset = touch.clientX - handle.getBoundingClientRect().left;
-    // eslint-disable-next-line
+
     if (finalOffset >= captcha.clientWidth && finalOffset <= captcha.clientWidth + button.clientWidth) {
       captcha.classList.add('passed');
     } else {
@@ -181,13 +165,9 @@ function mouseupTouchend(e) {
     shouldMove = false;
   }
 }
-// eslint-disable-next-line
 window.addEventListener('touchend', (e) => {
-  // eslint-disable-next-line
   mouseupTouchend(e);
 });
-// eslint-disable-next-line
 window.addEventListener('mouseup', (e) => {
-  // eslint-disable-next-line
   mouseupTouchend(e);
 });
